@@ -4,8 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Heart, ShoppingBag } from 'lucide-react';
 import { useWishlist } from '../context/WishlistContext';
-import ProductCard from '../../components/ProductCard';
-
+import { useCart } from '../context/CartContext';
 export default function ProductCard({ product }) {
   const { toggleWishlist, isInWishlist } = useWishlist();
   const { addToCart } = useCart();
