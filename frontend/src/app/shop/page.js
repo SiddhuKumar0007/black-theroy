@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { SlidersHorizontal, Grid, List, RefreshCw } from 'lucide-react';
 import ProductCard from '../../components/ProductCard';
 import { API_URL } from '../../context/AuthContext';
@@ -54,7 +54,6 @@ const staticFallbackProducts = [
 ];
 
 export default function Shop() {
-  const searchParams = useSearchParams();
   const router = useRouter();
 
   const [products, setProducts] = useState([]);
@@ -62,20 +61,16 @@ export default function Shop() {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   // Filter States
-  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || '');
-  const [selectedSubcategory, setSelectedSubcategory] = useState(searchParams.get('subcategory') || '');
-  const [selectedSize, setSelectedSize] = useState('');
+ const [selectedCategory, setSelectedCategory] = useState('');
+const [selectedSubcategory, setSelectedSubcategory] = useState('');
+const [searchQuery, setSearchQuery] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [priceRange, setPriceRange] = useState(10000);
   const [sortBy, setSortBy] = useState('-createdAt');
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
 
   // Synchronize with URL search parameters
-  useEffect(() => {
-    setSelectedCategory(searchParams.get('category') || '');
-    setSelectedSubcategory(searchParams.get('subcategory') || '');
-    setSearchQuery(searchParams.get('search') || '');
-  }, [searchParams]);
+
 
   useEffect(() => {
     const fetchProducts = async () => {
