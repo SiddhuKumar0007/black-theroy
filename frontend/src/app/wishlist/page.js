@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { Heart, ShoppingBag, ArrowRight } from 'lucide-react';
 import { useWishlist } from '../../context/WishlistContext';
 import ProductCard from '../../components/ProductCard';
+
+
 export default function Wishlist() {
   const { wishlist } = useWishlist();
 

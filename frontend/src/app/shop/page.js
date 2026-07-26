@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect, Suspense } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { SlidersHorizontal, Grid, List, RefreshCw } from 'lucide-react';
 import ProductCard from '../../components/ProductCard';
 import { API_URL } from '../../context/AuthContext';
@@ -53,7 +53,8 @@ const staticFallbackProducts = [
   }
 ];
 
-export default function Shop() {
+function ShopContent() {
+  const searchParams = useSearchParams();
   const router = useRouter();
 
   const [products, setProducts] = useState([]);
@@ -66,10 +67,14 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [priceRange, setPriceRange] = useState(10000);
   const [sortBy, setSortBy] = useState('-createdAt');
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
+  const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '');
 
   // Synchronize with URL search parameters
-
+  useEffect(() => {
+    setSelectedCategory(searchParams.get('category') || '');
+    setSelectedSubcategory(searchParams.get('subcategory') || '');
+    setSearchTerm(searchParams.get('search') || '');
+  }, [searchParams]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -82,7 +87,7 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
         if (selectedSize) url += `&sizes=${encodeURIComponent(selectedSize)}`;
         if (selectedColor) url += `&colors=${encodeURIComponent(selectedColor)}`;
         if (priceRange) url += `&maxPrice=${priceRange}`;
-        if (searchQuery) url += `&search=${encodeURIComponent(searchQuery)}`;
+        if (searchTerm) url += `&search=${encodeURIComponent(searchTerm)}`;
 
         const res = await fetch(url);
         const data = await res.json();
@@ -109,7 +114,7 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
     };
 
     fetchProducts();
-  }, [selectedCategory, selectedSubcategory, selectedSize, selectedColor, priceRange, sortBy, searchQuery]);
+  }, [selectedCategory, selectedSubcategory, selectedSize, selectedColor, priceRange, sortBy, searchTerm]);
 
   const clearFilters = () => {
     setSelectedCategory('');
@@ -117,7 +122,7 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
     setSelectedSize('');
     setSelectedColor('');
     setPriceRange(10000);
-    setSearchQuery('');
+    setSearchTerm('');
     router.push('/shop');
   };
 
@@ -130,9 +135,9 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
           <h1 className="font-display font-extrabold text-3xl uppercase tracking-widest">
             {selectedCategory ? `${selectedCategory}` : 'ALL COLLECTIONS'}
           </h1>
-          {searchQuery && (
+          {searchTerm && (
             <p className="text-xs text-neutral-500 uppercase tracking-widest mt-1">
-              Search Results for: &quot;{searchQuery}&quot;
+              Search Results for: &quot;{searchTerm}&quot;
             </p>
           )}
         </div>
@@ -382,5 +387,17 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
         </div>
       )}
     </div>
+  );
+}
+
+export default function Shop() {
+  return (
+    <Suspense fallback={
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-brand-black dark:border-white" />
+      </div>
+    }>
+      <ShopContent />
+    </Suspense>
   );
 }
