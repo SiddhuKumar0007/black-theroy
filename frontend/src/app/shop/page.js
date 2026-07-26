@@ -63,7 +63,6 @@ export default function Shop() {
   // Filter States
  const [selectedCategory, setSelectedCategory] = useState('');
 const [selectedSubcategory, setSelectedSubcategory] = useState('');
-const [searchQuery, setSearchQuery] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [priceRange, setPriceRange] = useState(10000);
   const [sortBy, setSortBy] = useState('-createdAt');
