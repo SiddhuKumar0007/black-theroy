@@ -1,99 +1,36 @@
-# Black Theory - Premium Luxury Streetwear E-Commerce Platform
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-A fast, responsive, and stunning luxury-themed full-stack e-commerce web application created for the clothing brand **Black Theory**. Inspired by high-fashion aesthetics (Apple, Nike, Zara), it features a minimalist black, white, and silver design.
+## Getting Started
 
----
+First, run the development server:
 
-## 🛠️ Technology Stack
-
-* **Frontend:** Next.js (App Router, JavaScript) + Tailwind CSS v4 + Lucide Icons + Framer Motion
-* **Backend:** Node.js + Express.js + JWT Authentication + express-rate-limit
-* **Database:** MongoDB (via Mongoose ORM)
-* **API Architecture:** RESTful APIs (CORS enabled, securitized routes, rate limited)
-* **Integrations:** Toggleable mock integrations for Stripe, Razorpay, and Firebase OTP.
-
----
-
-## 📁 Project Structure
-
-```
-black-theory/
-├── package.json           # Root concurrent scripts
-├── README.md              # Documentation
-├── backend/               # Express.js Server
-│   ├── src/
-│   │   ├── config/        # Database and gateway configuration
-│   │   ├── models/        # Mongoose collections
-│   │   ├── controllers/   # API controller logic
-│   │   ├── middleware/    # Auth guards, role validation, error logging
-│   │   ├── routes/        # Route declarations
-│   │   └── server.js      # Express server entrance
-│   ├── .env.example       # Example environment details
-│   └── package.json
-└── frontend/              # Next.js UI Application
-    ├── public/            # Static assets
-    ├── src/
-    │   ├── app/           # App Router screens (Page, Shop, Checkout, Admin, Auth)
-    │   ├── components/    # Reusable layouts (Navbar, Footer, CartDrawer, SearchOverlay)
-    │   ├── context/       # Auth state, Wishlist sync, Cart checkout maths, Theme toggles
-    │   └── utils/
-    ├── package.json
-    └── tailwind.config.js
-```
-
----
-
-## 🚀 Setup & Execution Guide
-
-### 1. Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) (v18+) and [MongoDB](https://www.mongodb.com/) running locally.
-
-### 2. Workspace Installation
-Install all dependencies for root, backend, and frontend with a single command from the root folder:
-```bash
-npm run install:all
-```
-
-### 3. Database Seeding
-To make sure you don't have to manually create mock records, we've built a **one-click database seeder** endpoint. 
-1. Start your local MongoDB server (usually at `mongodb://127.0.0.1:27017`).
-2. Run the backend/frontend.
-3. Open a browser and visit: **`http://localhost:5000/api/seed`**
-4. This will instantly seed MongoDB with 4 premium clothing designs and 3 active coupons.
-
-### 4. Running the Development Server
-Launch both the Next.js frontend and Express backend concurrently:
 ```bash
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
-* **Frontend:** `http://localhost:3000`
-* **Backend API:** `http://localhost:5000`
 
----
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## 🔒 Test Accounts & Credentials (Sandbox Mode)
+You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-For seamless out-of-the-box local testing, you don't need real API credentials. We support a toggleable Sandbox mode:
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-### OTP Verification Code
-* When testing Phone/OTP Login, use **any phone number** and enter the code: **`123456`**.
+## Learn More
 
-### Admin Access
-* To access the Admin Dashboard panel, register an account using any email ending with **`@blacktheory.com`** (e.g., `admin@blacktheory.com`). The server will automatically elevate these signups to the `admin` role.
-* Or log in with:
-  * **Email:** `admin@blacktheory.com`
-  * **Password:** `admin123` (once registered)
+To learn more about Next.js, take a look at the following resources:
 
-### Stripe & Razorpay Payments
-* The checkout payment system simulates transaction pipelines, giving visual loaders and processing reports without requiring active keys.
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
----
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## ✨ Design Features & Aesthetic System
-* **Typography:** Outfit (Display/Headings) and Inter (Sans-Serif body copy) loaded via Google Fonts.
-* **Palette:**
-  * Obsidian Black (`#0B0B0B`)
-  * Charcoal Dark (`#121212`)
-  * Platinum Light Grey (`#F5F5F7`)
-  * Chalk White (`#F9F6F0`)
-* **Animations:** Luxury zoom scale hover cards, transition fades, and slider accordions.
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

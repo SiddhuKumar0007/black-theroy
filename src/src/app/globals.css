@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  
+  --color-brand-black: #0B0B0B;
+  --color-brand-charcoal: #121212;
+  --color-brand-darkgrey: #1C1C1C;
+  --color-brand-grey: #2D2D2D;
+  --color-brand-silver: #E2E8F0;
+  --color-brand-platinum: #F5F5F7;
+  --color-accent-gold: #D4AF37;
+}
+
+:root {
+  --background: #FFFFFF;
+  --foreground: #0B0B0B;
+  --border-color: #E2E8F0;
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --header-bg: rgba(255, 255, 255, 0.7);
+}
+
+.dark {
+  --background: #0B0B0B;
+  --foreground: #FFFFFF;
+  --border-color: #2D2D2D;
+  --card-bg: rgba(18, 18, 18, 0.8);
+  --header-bg: rgba(11, 11, 11, 0.7);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: var(--font-display);
+}
+
+/* Glassmorphism utility class */
+.glass {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+}
+
+.glass-nav {
+  background: var(--header-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+/* Luxury hover card outline effect */
+.premium-card {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid var(--border-color);
+}
+
+.premium-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border: 1px solid transparent;
+  transition: border-color 0.4s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.premium-card:hover::before {
+  border-color: var(--foreground);
+}
+
+/* Shine effect */
+.shine-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-hover::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transition: none;
+}
+
+.shine-hover:hover::after {
+  left: 200%;
+  transition: all 0.8s ease-in-out;
+}

@@ -1,14 +1,14 @@
 {
-  "name": "black-theory-root",
-  "version": "1.0.0",
-  "description": "Root configuration for Black Theory E-Commerce Platform",
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "cd frontend && npm run dev",
-    "build": "cd frontend && npm install && npm run build",
-    "start": "cd frontend && npm run start"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
   },
   "dependencies": {
-    "concurrently": "^8.2.2",
     "framer-motion": "^12.42.2",
     "lucide-react": "^1.24.0",
     "next": "16.2.10",
