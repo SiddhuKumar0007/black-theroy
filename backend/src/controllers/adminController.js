@@ -7,19 +7,20 @@ const User = require('../models/User');
 // @access  Private/Admin
 exports.getDashboardStats = async (req, res, next) => {
   try {
-    // Basic Counts
-    const totalOrdersCount = await Order.countDocuments();
+    // Basic Counts (excluding cancelled orders)
+    const totalOrdersCount = await Order.countDocuments({ orderStatus: { $ne: 'cancelled' } });
     const totalUsersCount = await User.countDocuments({ role: 'customer' });
     
-    // Real Total Revenue calculations (all completed/registered orders)
-    const allOrders = await Order.find();
-    const totalRevenue = allOrders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
+    // Real Total Revenue calculations (only active/completed orders, excluding cancelled)
+    const activeOrders = await Order.find({ orderStatus: { $ne: 'cancelled' } });
+    const totalRevenue = activeOrders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
 
-    // Today's Real Sales
+    // Today's Real Sales & Daily Orders (excluding cancelled)
     const startOfToday = new Date();
     startOfToday.setHours(0, 0, 0, 0);
     const todayOrders = await Order.find({
-      createdAt: { $gte: startOfToday }
+      createdAt: { $gte: startOfToday },
+      orderStatus: { $ne: 'cancelled' }
     });
     const todayRevenue = todayOrders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
 
@@ -43,7 +44,7 @@ exports.getDashboardStats = async (req, res, next) => {
       }
     });
 
-    // Real Weekly Sales Chart Data for the last 7 days
+    // Real Weekly Sales Chart Data for the last 7 days (excluding cancelled)
     const salesChart = [];
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -58,7 +59,8 @@ exports.getDashboardStats = async (req, res, next) => {
       endOfDay.setHours(23, 59, 59, 999);
 
       const dayOrders = await Order.find({
-        createdAt: { $gte: startOfDay, $lte: endOfDay }
+        createdAt: { $gte: startOfDay, $lte: endOfDay },
+        orderStatus: { $ne: 'cancelled' }
       });
 
       const daySales = dayOrders.reduce((sum, o) => sum + (o.totalAmount || 0), 0);

@@ -21,18 +21,6 @@ export default function ProductCard({ product }) {
     toggleWishlist(product);
   };
 
-  const handleQuickAdd = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    // Quick Add: default to first available size and color
-    const defaultSize = product.sizes ? product.sizes[0] : 'M';
-    const defaultColor = product.colors && product.colors.length > 0 
-      ? product.colors[0] 
-      : { name: 'Pitch Black', hex: '#000000' };
-    
-    addToCart(product, 1, defaultSize, defaultColor);
-  };
-
   return (
     <div 
       className="group premium-card bg-white dark:bg-brand-charcoal overflow-hidden flex flex-col justify-between"
@@ -61,17 +49,6 @@ export default function ProductCard({ product }) {
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
-
-        {/* Quick Add overlay */}
-        <div className="absolute inset-x-4 bottom-4 translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10">
-          <button 
-            onClick={handleQuickAdd}
-            className="w-full py-2.5 bg-brand-black dark:bg-white text-white dark:text-brand-black font-display font-extrabold uppercase text-[10px] tracking-widest flex items-center justify-center space-x-2 border border-brand-black dark:border-white hover:bg-transparent dark:hover:bg-transparent hover:text-brand-black dark:hover:text-white transition-all shadow-md"
-          >
-            <ShoppingBag size={12} />
-            <span>QUICK ADD</span>
-          </button>
-        </div>
       </Link>
 
       {/* Info details */}

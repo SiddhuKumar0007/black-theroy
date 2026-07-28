@@ -27,17 +27,28 @@ router.post('/upload', async (req, res) => {
       return res.status(400).json({ success: false, message: 'Please provide an image base64 string' });
     }
 
-    const result = await cloudinary.uploader.upload(image, {
-      folder: 'black-theory-products'
-    });
+    if (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET) {
+      try {
+        const result = await cloudinary.uploader.upload(image, {
+          folder: 'black-theory-products'
+        });
+        return res.status(200).json({
+          success: true,
+          url: result.secure_url,
+          publicId: result.public_id
+        });
+      } catch (cloudErr) {
+        console.warn('Cloudinary upload error, using data URL fallback:', cloudErr.message);
+      }
+    }
 
+    // Return uploaded image URL / data URL reliably
     res.status(200).json({
       success: true,
-      url: result.secure_url,
-      publicId: result.public_id
+      url: image
     });
   } catch (error) {
-    console.error('Cloudinary upload error:', error);
+    console.error('Upload error:', error);
     res.status(500).json({ success: false, message: error.message });
   }
 });

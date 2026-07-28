@@ -198,11 +198,24 @@ exports.updateOrderStatus = async (req, res, next) => {
     }
 
     const { orderStatus, paymentStatus, courierTracking, courierName } = req.body;
+    const previousStatus = order.orderStatus;
 
     if (orderStatus) order.orderStatus = orderStatus;
     if (paymentStatus) order.paymentStatus = paymentStatus;
     if (courierTracking) order.courierTracking = courierTracking;
     if (courierName) order.courierName = courierName;
+
+    // Restore stock if marked as cancelled for the first time
+    if (orderStatus === 'cancelled' && previousStatus !== 'cancelled') {
+      if (order.paymentStatus === 'paid') {
+        order.paymentStatus = 'refunded';
+      }
+      for (const item of order.items) {
+        await Product.findByIdAndUpdate(item.product, {
+          $inc: { stockQuantity: item.quantity }
+        });
+      }
+    }
 
     await order.save();
 
@@ -215,9 +228,9 @@ exports.updateOrderStatus = async (req, res, next) => {
   }
 };
 
-// @desc    Cancel/Refund order
+// @desc    Cancel/Refund order (Admin only)
 // @route   POST /api/orders/:id/cancel
-// @access  Private
+// @access  Private/Admin
 exports.cancelOrder = async (req, res, next) => {
   try {
     const order = await Order.findById(req.params.id);
@@ -226,26 +239,24 @@ exports.cancelOrder = async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Order not found' });
     }
 
-    // Ownership check
-    if (order.user.toString() !== req.user.id && req.user.role !== 'admin') {
-      return res.status(401).json({ success: false, message: 'Not authorized' });
+    // Strictly enforce Admin only order cancellation
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ success: false, message: 'Only Admin can cancel an order' });
     }
 
-    // Only allow cancellation if order is pending or processing
-    if (order.orderStatus !== 'pending' && order.orderStatus !== 'processing' && req.user.role !== 'admin') {
-      return res.status(400).json({ success: false, message: 'Order has already been shipped and cannot be cancelled' });
-    }
-
+    const previousStatus = order.orderStatus;
     order.orderStatus = 'cancelled';
     if (order.paymentStatus === 'paid') {
       order.paymentStatus = 'refunded';
     }
 
-    // Restore stock
-    for (const item of order.items) {
-      await Product.findByIdAndUpdate(item.product, {
-        $inc: { stockQuantity: item.quantity }
-      });
+    // Restore stock if not already cancelled
+    if (previousStatus !== 'cancelled') {
+      for (const item of order.items) {
+        await Product.findByIdAndUpdate(item.product, {
+          $inc: { stockQuantity: item.quantity }
+        });
+      }
     }
 
     await order.save();

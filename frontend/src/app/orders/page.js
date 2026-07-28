@@ -299,15 +299,6 @@ export default function Orders() {
                       )}
                     </div>
 
-                    {/* Cancellation Action trigger */}
-                    {(ord.orderStatus === 'pending' || ord.orderStatus === 'processing') && (
-                      <button
-                        onClick={() => handleCancelOrder(ord._id)}
-                        className="w-full py-2 bg-transparent hover:bg-red-500/10 text-red-500 border border-red-500/30 text-xs font-display font-bold uppercase tracking-widest rounded transition-colors"
-                      >
-                        Request Cancellation
-                      </button>
-                    )}
                   </div>
 
                 </div>

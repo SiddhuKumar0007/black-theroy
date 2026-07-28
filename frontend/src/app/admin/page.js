@@ -1224,11 +1224,13 @@ export default function AdminDashboard() {
                         onChange={async (e) => {
                           const file = e.target.files?.[0];
                           if (!file) return;
+                          setUploadingImage(true);
+                          setUploadError('');
                           try {
                             const reader = new FileReader();
                             reader.onloadend = async () => {
+                              const base64 = reader.result;
                               try {
-                                const base64 = reader.result;
                                 const res = await fetch(`${API_URL}/admin/upload`, {
                                   method: 'POST',
                                   headers: {
@@ -1238,13 +1240,21 @@ export default function AdminDashboard() {
                                   body: JSON.stringify({ image: base64 })
                                 });
                                 const data = await res.json();
-                                if (data.success) {
+                                if (data.success && data.url) {
                                   slot.set(data.url);
+                                } else {
+                                  slot.set(base64);
                                 }
-                              } catch (err) {}
+                              } catch (err) {
+                                slot.set(base64);
+                              } finally {
+                                setUploadingImage(false);
+                              }
                             };
                             reader.readAsDataURL(file);
-                          } catch (err) {}
+                          } catch (err) {
+                            setUploadingImage(false);
+                          }
                           e.target.value = '';
                         }}
                       />
