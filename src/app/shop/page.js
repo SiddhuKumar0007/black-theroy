@@ -62,8 +62,9 @@ function ShopContent() {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   // Filter States
- const [selectedCategory, setSelectedCategory] = useState('');
-const [selectedSubcategory, setSelectedSubcategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedSubcategory, setSelectedSubcategory] = useState('');
+  const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [priceRange, setPriceRange] = useState(10000);
   const [sortBy, setSortBy] = useState('-createdAt');
