@@ -11,8 +11,8 @@ exports.getProducts = async (req, res, next) => {
     // Copy req.query
     const reqQuery = { ...req.query };
 
-    // Fields to exclude from filtering
-    const removeFields = ['select', 'sort', 'page', 'limit', 'search', 'minPrice', 'maxPrice', 'category', 'sizes', 'colors', 'adminView'];
+    // Fields to exclude from filtering (including Next.js catch-all route parameters)
+    const removeFields = ['select', 'sort', 'page', 'limit', 'search', 'minPrice', 'maxPrice', 'category', 'sizes', 'colors', 'adminView', 'catchall', 'route'];
     removeFields.forEach((param) => delete reqQuery[param]);
 
     // Create query string
