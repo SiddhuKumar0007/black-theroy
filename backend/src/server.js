@@ -251,7 +251,7 @@ const autoSeedDB = async () => {
       name: 'Siddhu Kumar',
       email: 'siddhukumar2006@gmail.com',
       password: 'siddhujha12345',
-      role: 'customer',
+      role: 'admin',
       phone: '9654365649'
     });
 
@@ -473,7 +473,7 @@ app.get('/api/seed', async (req, res) => {
       name: 'Siddhu Kumar',
       email: 'siddhukumar2006@gmail.com',
       password: 'siddhujha12345',
-      role: 'customer',
+      role: 'admin',
       phone: '9654365649'
     });
 

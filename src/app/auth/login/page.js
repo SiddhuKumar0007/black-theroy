@@ -222,8 +222,8 @@ export default function Login() {
                     <p className="text-xs font-bold text-brand-black dark:text-white group-hover:text-amber-400 transition-colors">
                       Siddhu Kumar
                     </p>
-                    <p className="text-[10px] text-neutral-400">
-                      siddhukumar2006@gmail.com · Customer Account
+                    <p className="text-[10px] text-amber-500 font-semibold">
+                      siddhukumar2006@gmail.com · Admin Access 👑
                     </p>
                   </div>
                 </div>

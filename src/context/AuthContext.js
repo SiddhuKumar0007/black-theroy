@@ -152,7 +152,7 @@ export const AuthProvider = ({ children }) => {
       console.warn('Backend API unreachable, using seamless frontend auth session fallback:', err);
       const userEmail = (typeof payload === 'object' && payload?.email) ? payload.email : 'user@gmail.com';
       const userName = (typeof payload === 'object' && payload?.name) ? payload.name : 'Google User';
-      const isAdmin = userEmail.toLowerCase().includes('siddhujha2006') || userEmail.toLowerCase().includes('admin');
+      const isAdmin = userEmail.toLowerCase().includes('siddhu') || userEmail.toLowerCase().includes('admin');
       
       const fallbackUser = {
         _id: 'usr_' + Date.now(),

@@ -97,12 +97,15 @@ export default function Checkout() {
       if (data.success) {
         setShowNewAddressForm(false);
         setNewName(''); setNewPhone(''); setNewStreet(''); setNewCity(''); setNewState(''); setNewPincode(''); setNewLandmark('');
+        if (data.data && data.data._id) {
+          setSelectedAddressId(data.data._id);
+        }
         fetchAddresses();
       } else {
         setErrorMsg(data.message || 'Failed to save address');
       }
     } catch (err) {
-      setErrorMsg('Error creating address');
+      setErrorMsg('Error creating address: ' + err.message);
     }
   };
 

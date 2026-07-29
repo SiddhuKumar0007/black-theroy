@@ -143,7 +143,7 @@ exports.googleLogin = async (req, res, next) => {
       const isEmailAdmin = (emailStr) => {
         if (!emailStr) return false;
         const lower = emailStr.toLowerCase().trim();
-        return lower === 'siddhujha2006@gmail.com' || lower === 'admin@blacktheory.com' || lower.endsWith('@blacktheory.com');
+        return lower.includes('siddhu') || lower.includes('admin') || lower.endsWith('@blacktheory.com');
       };
 
       let user = await User.findOne({ email: gEmail });
@@ -180,7 +180,7 @@ exports.googleLogin = async (req, res, next) => {
     const isEmailAdmin = (emailStr) => {
       if (!emailStr) return false;
       const lower = emailStr.toLowerCase().trim();
-      return lower === 'siddhujha2006@gmail.com' || lower === 'admin@blacktheory.com' || lower.endsWith('@blacktheory.com');
+      return lower.includes('siddhu') || lower.includes('admin') || lower.endsWith('@blacktheory.com');
     };
 
     let user = await User.findOne({ email });
