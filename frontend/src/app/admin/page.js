@@ -320,15 +320,20 @@ export default function AdminDashboard() {
     try {
       const res = await fetch(`${API_URL}/products/${id}`, {
         method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { 
+          'Authorization': `Bearer ${token}` 
+        }
       });
       const data = await res.json();
       if (data.success) {
         setActionMessage('Product deleted successfully');
         loadAdminData();
+      } else {
+        alert(data.message || 'Failed to delete product');
       }
     } catch (err) {
       console.error(err);
+      alert('Error connecting to delete product API: ' + err.message);
     }
   };
 
@@ -416,15 +421,20 @@ export default function AdminDashboard() {
     try {
       const res = await fetch(`${API_URL}/coupons/${id}`, {
         method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { 
+          'Authorization': `Bearer ${token}` 
+        }
       });
       const data = await res.json();
       if (data.success) {
         setActionMessage('Coupon deleted successfully');
         loadAdminData();
+      } else {
+        alert(data.message || 'Failed to delete coupon');
       }
     } catch (err) {
       console.error(err);
+      alert('Error connecting to delete coupon API: ' + err.message);
     }
   };
 
