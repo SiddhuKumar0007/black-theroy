@@ -307,6 +307,20 @@ app.use(helmet());
 // CORS Setup
 app.use(cors());
 
+// Database connection middleware to ensure connection is ready before processing requests
+app.use(async (req, res, next) => {
+  const mongoose = require('mongoose');
+  if (mongoose.connection.readyState !== 1) {
+    console.log('🔄 DB not connected, connecting now...');
+    try {
+      await connectDB();
+    } catch (err) {
+      console.error('❌ Database connection middleware error:', err.message);
+    }
+  }
+  next();
+});
+
 // Body parser (10mb limit to support base64 image uploads)
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
