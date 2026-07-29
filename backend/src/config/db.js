@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
-  const dbUrl = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/black-theory';
+  const dbUrl = process.env.MONGODB_URI || 'mongodb+srv://siddhujha2006_db_user:MceYYTfsICqd62T0@cluster0.nhfhgb1.mongodb.net/blacktheory?retryWrites=true&w=majority';
   
   try {
     const conn = await mongoose.connect(dbUrl, { serverSelectionTimeoutMS: 1500 });
