@@ -270,11 +270,35 @@ connectDB().then(() => {
 
 // Seeding Route for instant manual trigger
 app.get('/api/seed', async (req, res) => {
-  await autoSeedDB();
-  res.status(200).json({
-    success: true,
-    message: 'Database seeded! Admin: admin@blacktheory.com / admin123 | Customer: siddhukumar2006@gmail.com / siddhujha12345'
-  });
+  try {
+    const mongoose = require('mongoose');
+    const Product = require('./models/Product');
+    const User = require('./models/User');
+    
+    await autoSeedDB();
+    
+    const dbState = mongoose.connection.readyState;
+    const dbHost = mongoose.connection.host;
+    const dbName = mongoose.connection.name;
+    const productCount = await Product.countDocuments();
+    const userCount = await User.countDocuments();
+    
+    res.status(200).json({
+      success: true,
+      diagnostics: {
+        readyState: dbState,
+        host: dbHost,
+        databaseName: dbName,
+        products: productCount,
+        users: userCount
+      }
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+  }
 });
 
 // Security Headers
