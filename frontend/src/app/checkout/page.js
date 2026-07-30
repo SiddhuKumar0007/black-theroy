@@ -309,7 +309,7 @@ export default function Checkout() {
                     <label className="block text-[9px] font-display font-bold uppercase tracking-widest text-neutral-500 mb-1">Full Name</label>
                     <input 
                       type="text" 
-                      placeholder="Siddhu Kumar" 
+                      placeholder="John Doe" 
                       value={newName} 
                       onChange={(e) => setNewName(e.target.value)}
                       className="w-full p-2 border border-brand-silver dark:border-brand-grey bg-transparent text-xs rounded outline-none" 
@@ -320,7 +320,7 @@ export default function Checkout() {
                     <label className="block text-[9px] font-display font-bold uppercase tracking-widest text-neutral-500 mb-1">Phone Number</label>
                     <input 
                       type="tel" 
-                      placeholder="9654365649" 
+                      placeholder="9876543210" 
                       value={newPhone} 
                       onChange={(e) => setNewPhone(e.target.value)}
                       className="w-full p-2 border border-brand-silver dark:border-brand-grey bg-transparent text-xs rounded outline-none" 
